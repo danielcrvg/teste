@@ -1,0 +1,93 @@
+
+[Pycursos - DJANGO]
+
+
+
+[+] Instalação e configuração inicial do ambiente:
+
+- instalar virtualenv
+pip install virtualenv
+
+- instalar django
+pip install django==1.6
+
+arquivo manage.py : arquivo para rodar comandos administrativos do django
+arquivo urls.py : definicao de urls
+settings.py : arquivo de configuracao
+
+
+Sempre ativar ambiente virtual: $ . activate  ou source activate
+
+
+$ python manage.py runserver  // Rodar django, entar em http://localhost:8000
+
+
+[+] Configuracao de banco de dados:
+ 
+arquivo settings.py
+
+Caso necessario alterar o ENGINE apontando para o tipo de bd (mysql,postgree,etc)
+e alterar a base de dados em NAME.
+
+Alterar a linguagem (LANGUAGE_CODE) para portgues: 'pt-br'
+
+$ python manage.py syncdb  // Sincronizar banco de dados
+
+Django ja cria automaticamente as tableas de configuração q ele necessita.
+
+
+[+] Criacao da primeira app (url vazia)
+
+$ python manage.py startapp core
+
+- Para referenciar melhor a aplicação dentro do settings.py, mover a pasta /core para dentro de /simplemooc.
+- Adicionar o path dessa app no arq settings.py ('simplemooc.core'), dentro das configurações INSTALLED_APPS.
+
+- Configurar o arquivo urls.py, para definir a url para nova app (core):
+
+url(r'^$', 'simplemooc.core.views.home', name='home'),
+
+r'^$^' , url que nao tem nada. Comeca com nada (^) e termina com nada($).
+simplemooc.core.views.home , executar a funcao home dentro desse path
+name='home' , nome da função.
+
+- Acessar o arquivo /core/view.py e add a view para aquela requisição, através da da elaboração de uma funcao chamada 'home', nome que foi definido dentro do arquivo urls.py. 
+
+
+[+] Criação de Templates.
+
+templates definem as regras de como o site ira ser apresentado.
+
+- Criar pasta de templates dentro do /core.
+
+- Criar arquivo home.html dentro da pasta /core/templates
+Simple MOOC
+Usuario: {{ usuario }}  //variavel q esta disponível no template para receber dados
+ 
+- Alterar o views.py para retornar um template definido.
+return render(request, 'home.html', {'usuario':'daniel'})
+
+render, função de renderizar
+home.html, arquivo
+'usuario':'daniel' , variavel disponivel no template e valor q sera passado a ela. 
+
+
+[+] Template oficial
+
+Serão utilizados dois templates, um deles statico.
+
+é necessario importar a biblioteca static para que o template rode:
+{% load static %} 
+
+e colocar no css statico {% static caminho/arq.css %}
+
+Foi criada uma pasta 'static' dentro da pasta /core para guardar arquivos staticos
+
+
+Para add urls:
+
+- Add no views.py a função para chamar o template
+- Add a url no urls.py
+- Add o template
+
+
